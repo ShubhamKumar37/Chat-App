@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import { ErrorHandler } from './middlewares/index.js';
 import { authRoute, messageRoute, userRoute } from './routes/index.js';
 import { dbConnect } from './config/dbConnect.config.js';
+import cors from "cors";
 
 dotenv.config({ path: "./.env" });
 
@@ -14,6 +15,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
+app.use(cors({
+    credentials: true,
+    origin: ["http://localhost:5173", "http://localhost:5174"]
+}));
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
